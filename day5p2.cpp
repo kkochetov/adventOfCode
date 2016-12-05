@@ -19,7 +19,7 @@ int main()
      while (i < 8) {
          std::string hash = md5(input + std::to_string(index));
          if ((hash.substr(0,5) == "00000")){
-                if (isCorrectNumber(hash.substr(5,1).at(0))) {
+                if (isCorrectNumber(hash.at(5))) {
                         int pos = std::stoi(hash.substr(5,1));
                         if (password.at(pos) == '_') {
                             password[pos] = hash.at(6);    
