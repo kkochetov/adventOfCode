@@ -1,9 +1,9 @@
 #include <iostream>
-#include <c++/4.8.3/cstring>
+#include <cstring>
 #include <fstream>
-#include <c++/4.8.3/vector>
+#include <vector>
 #include <regex>
-#include <c++/4.8.3/map>
+#include <map>
 
 
 using namespace std;
@@ -26,11 +26,7 @@ public:
                 numb += input[i];
                 continue;
             }
-            if (input[i] != '-'){
                 part += input[i];
-                continue;
-            }
-
         }
             this->roomCode =  part;
             this->number =  std::stoi(numb);
@@ -43,6 +39,32 @@ public:
 
     int getNumber(){
         return this->number;
+    }
+    
+        
+    std::string decode(){
+        std::string result = "";
+        int alfabetLen = 26;
+        int offset = this->number % alfabetLen;
+        char c;
+        for (int i = 0; i < this->roomCode.size(); i++){
+            
+            if (this->roomCode.at(i) == '\n') {
+                continue;
+            }
+            
+            if (this->roomCode.at(i) == '-') {
+                result += ' ';
+                continue;
+            }
+            c = roomCode[i];
+            if ((int(c)+offset) > 122) {
+                result += char((int(c)+offset)-alfabetLen);
+            } else {
+                result += char((int(c)+offset));
+            }
+        }
+        return result;
     }
 
 private:
@@ -78,6 +100,7 @@ private:
         int x = c;
         return  (x >= 48) && (x <= 57);
     }
+
 };
 
 std::string readFile(std::string fileName){
@@ -93,21 +116,21 @@ std::string readFile(std::string fileName){
 
 int main()
 {
-    int count = 0;
 
-    std::string input = readFile("C:\\kochetov\\adventofcode2016\\day4.input");
+    std::string input = readFile("./day4.input");
 
     std::string line = "";
     for (int i=0; i < input.size(); i++){
             if (input[i] == '\n') {
                 Room *r = new Room(line);
-                if (r->isReal()) count += r->getNumber();
+                if (r->isReal()) cout << r->decode() << " : " << r->getNumber() << endl;
                 line.clear();
+                delete (r);
             }
     line += input[i];
     }
 
-    cout << count;
+
 
     return 0;
 }

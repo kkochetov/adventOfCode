@@ -1,6 +1,6 @@
 #include <iostream>
-#include <c++/4.8.3/cstring>
-#include <c++/4.8.3/vector>
+#include <cstring>
+#include <vector>
 
 using namespace std;
 
