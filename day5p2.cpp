@@ -12,22 +12,25 @@ bool isCorrectNumber(char c){
 int main()
 {
     std::string input = "abbhdwsy";
-    char password[8] = {NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL};
+    std::string password = "________";
 
      int i = 0;
      int index = 0;
      while (i < 8) {
          std::string hash = md5(input + std::to_string(index));
-         if ((hash.substr(0,5) == "00000") && isCorrectNumber(hash.substr(5,1))){
-                int pos = std::stoi(hash.substr(5,1));
-                if (password[pos] != NULL) {
-                    password[pos] = hash.substr(6,1);    
-                    i++;
+         if ((hash.substr(0,5) == "00000")){
+                if (isCorrectNumber(hash.substr(5,1).at(0))) {
+                        int pos = std::stoi(hash.substr(5,1));
+                        if (password.at(pos) == '_') {
+                            password[pos] = hash.at(6);    
+                            i++;
+                            cout << password << endl;    
+                        }
                 }
          }    
          index++;
      }
-   cout << password << endl;
+   cout << password << endl; //424a0197
     return 0;
 }
 
